@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RS232Logger_control.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="CodePage" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">866</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
