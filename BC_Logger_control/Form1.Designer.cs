@@ -1107,6 +1107,7 @@ namespace BC_Logger_control
             this.textBox_terminal.Font = new System.Drawing.Font("Courier New", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox_terminal.Location = new System.Drawing.Point(450, 34);
             this.textBox_terminal.Margin = new System.Windows.Forms.Padding(6);
+            this.textBox_terminal.MaxLength = 32767000;
             this.textBox_terminal.Multiline = true;
             this.textBox_terminal.Name = "textBox_terminal";
             this.textBox_terminal.ReadOnly = true;
