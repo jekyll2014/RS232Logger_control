@@ -546,13 +546,6 @@ namespace BC_Logger_control
                     SetText(tmp + "\n");
                     tmp = tmp.Substring(tmp.IndexOf('x') + 1).Trim();
                     getcrc = Convert.ToInt16(tmp, 16);
-                    /*if (!int.TryParse(fname, out getcrc))
-                    {
-                        SetText("Error parsing file CRC\r\n");
-                        checkBox_portMon.Checked = portMon_backup;
-                        return (false);
-                    }*/
-                    //serialPort1.ReadLine();
                 }
             }
             catch (TimeoutException ex)
@@ -581,7 +574,7 @@ namespace BC_Logger_control
                 }
                 try
                 {
-                    byte[] hexLog = decodeLog(file.ToArray(), true);
+                    byte[] hexLog = decodeLog(file.ToArray(), RS232Logger_control.Properties.Settings.Default.CodePage);
                     File.WriteAllBytes(name + ".txt", hexLog);
                 }
                 catch (Exception ex)
@@ -597,7 +590,7 @@ namespace BC_Logger_control
             return true;
         }
 
-        byte[] decodeLog(byte[] inData, bool toBIN = false, bool signals = true, bool timeStamp = true, bool showTX = true, bool showRX = true)
+        public static byte[] decodeLog(byte[] inData, int CodePage = 866, string CSVdelimiter = " ", bool toBIN = false, bool signals = true, bool timeStamp = true, bool showTX = true, bool showRX = true)
         {
             //convert data
             //byte stuffing decode
@@ -618,7 +611,6 @@ namespace BC_Logger_control
             int printed_signals = -1;
             bool now_tx = true;
             string timeStampString = "";
-            string CSVdelimiter = ";";
             UInt32 startTime = 0;
             DateTime startDate = new DateTime();
 
@@ -640,7 +632,7 @@ namespace BC_Logger_control
                     {
                         if ((now_tx && showTX) || (!now_tx && showRX))
                         {
-                            if (toBIN == false) outData.AddRange(Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage).GetBytes(ConvertByteToHex(0xff)));
+                            if (toBIN == false) outData.AddRange(Encoding.GetEncoding(CodePage).GetBytes(ConvertByteToHex(0xff)));
                             else outData.Add(0xff);
                         }
                     }
@@ -665,7 +657,7 @@ namespace BC_Logger_control
                         if (timeStamp)
                         {
                             timeStampString = "[" + (localDateTime.Year).ToString() + "/" + localDateTime.Month.ToString() + "/" + localDateTime.Day.ToString() + " " + localDateTime.Hour.ToString() + ":" + localDateTime.Minute.ToString() + ":" + localDateTime.Second.ToString() + "]";
-                            outData.AddRange(Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage).GetBytes("\r\n" + timeStampString + CSVdelimiter + "<<" + CSVdelimiter));
+                            outData.AddRange(Encoding.GetEncoding(CodePage).GetBytes("\r\n" + timeStampString + CSVdelimiter + "<<" + CSVdelimiter));
                             timeStampString = "";
                         }
                     }
@@ -698,7 +690,7 @@ namespace BC_Logger_control
                         now_tx = false;
                         if (showRX == true)
                         {
-                            outData.AddRange(Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage).GetBytes("\r\n" + timeStampString + CSVdelimiter + "<<" + CSVdelimiter));
+                            outData.AddRange(Encoding.GetEncoding(CodePage).GetBytes("\r\n" + timeStampString + CSVdelimiter + "<<" + CSVdelimiter));
                             timeStampString = "";
                         }
                     }
@@ -707,7 +699,7 @@ namespace BC_Logger_control
                         now_tx = true;
                         if (showTX == true)
                         {
-                            outData.AddRange(Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage).GetBytes("\r\n" + timeStampString + CSVdelimiter + ">>" + CSVdelimiter));
+                            outData.AddRange(Encoding.GetEncoding(CodePage).GetBytes("\r\n" + timeStampString + CSVdelimiter + ">>" + CSVdelimiter));
                             timeStampString = "";
                         }
                     }
@@ -715,7 +707,7 @@ namespace BC_Logger_control
                     {
                         string tmp = "\r\n" + timeStampString + CSVdelimiter;
                         tmp += "<OVF>";
-                        outData.AddRange(Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage).GetBytes(tmp + CSVdelimiter));
+                        outData.AddRange(Encoding.GetEncoding(CodePage).GetBytes(tmp + CSVdelimiter));
                         timeStampString = "";
                     }
                     else if (b < 64 && signals == true)
@@ -769,18 +761,18 @@ namespace BC_Logger_control
                                 tmp += (GetBit(b, RING_bit)).ToString();
                             }
                         }
-                        outData.AddRange(Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage).GetBytes(tmp + CSVdelimiter));
+                        outData.AddRange(Encoding.GetEncoding(CodePage).GetBytes(tmp + CSVdelimiter));
                         printed_signals = b;
                         timeStampString = "";
                     }
+                    else outData.AddRange(Encoding.GetEncoding(CodePage).GetBytes("\r\n [UNKNOWN]" + ConvertByteToHex(b)));
                 }
                 //simple byte
                 else if ((now_tx && showTX) || (!now_tx && showRX))
                 {
-                    if (toBIN == false) outData.AddRange(Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage).GetBytes(ConvertByteToHex(b)));
+                    if (toBIN == false) outData.AddRange(Encoding.GetEncoding(CodePage).GetBytes(ConvertByteToHex(b)));
                     else outData.Add(b);
                 }
-                else outData.AddRange(Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage).GetBytes("\r\n [UNKNOWN]" + ConvertByteToHex(b)));
             }
             return outData.ToArray();
         }
