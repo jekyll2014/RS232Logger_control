@@ -143,56 +143,6 @@ namespace BC_Logger_control
             return (crc);
         }
 
-        private string getDateString()
-        {
-            string dateString = "";
-            switch (DateTime.Today.Month.ToString("D2"))
-            {
-                case "01":
-                    dateString = "Jan";
-                    break;
-                case "02":
-                    dateString = "Feb";
-                    break;
-                case "03":
-                    dateString = "Mar";
-                    break;
-                case "04":
-                    dateString = "Apr";
-                    break;
-                case "05":
-                    dateString = "May";
-                    break;
-                case "06":
-                    dateString = "Jun";
-                    break;
-                case "07":
-                    dateString = "Jul";
-                    break;
-                case "08":
-                    dateString = "Aug";
-                    break;
-                case "09":
-                    dateString = "Sep";
-                    break;
-                case "10":
-                    dateString = "Oct";
-                    break;
-                case "11":
-                    dateString = "Nov";
-                    break;
-                case "12":
-                    dateString = "Dec";
-                    break;
-            }
-            dateString += " " + DateTime.Today.Day.ToString("D2");
-            dateString += " " + DateTime.Today.Year.ToString("D4");
-            dateString += " " + DateTime.Now.Hour.ToString("D2");
-            dateString += ":" + DateTime.Now.Minute.ToString("D2");
-            dateString += ":" + DateTime.Now.Second.ToString("D2");
-            return dateString;
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             serialPort1.Encoding = Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage);
@@ -282,6 +232,8 @@ namespace BC_Logger_control
                     button_portConfig.Enabled = true;
                     button_echo.Enabled = true;
                     button_echo.Enabled = true;
+                    button_getTime.Enabled = true;
+                    button_setTime.Enabled = true;
                     button_timeStamp.Enabled = true;
                     button_signals.Enabled = true;
                     button_autoStart.Enabled = true;
@@ -332,6 +284,8 @@ namespace BC_Logger_control
             button_portConfig.Enabled = false;
             button_echo.Enabled = false;
             button_echo.Enabled = false;
+            button_getTime.Enabled = false;
+            button_setTime.Enabled = false;
             button_timeStamp.Enabled = false;
             button_signals.Enabled = false;
             button_autoStart.Enabled = false;
@@ -653,6 +607,7 @@ namespace BC_Logger_control
             byte SERIAL_TX = 103;
             //byte SERIAL_SIGNAL = 104;
             byte BUFFER_OVERFLOW = 105;
+            byte BYTE_DATESTAMP = 106;
 
             byte CD_bit = 0;
             byte DTR_bit = 1;
@@ -664,6 +619,8 @@ namespace BC_Logger_control
             bool now_tx = true;
             string timeStampString = "";
             string CSVdelimiter = ";";
+            UInt32 startTime = 0;
+            DateTime startDate = new DateTime();
 
             List<byte> outData = new List<byte>();
             int pos = 0;
@@ -679,12 +636,37 @@ namespace BC_Logger_control
                     if (pos >= inData.Length) break;
                     b = inData[pos];
                     pos++;
-                    if (b == BYTE_255) //byte stuffing sign repeated
+                    if (b == BYTE_255) //byte 0xFF
                     {
                         if ((now_tx && showTX) || (!now_tx && showRX))
                         {
                             if (toBIN == false) outData.AddRange(Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage).GetBytes(ConvertByteToHex(0xff)));
                             else outData.Add(0xff);
+                        }
+                    }
+                    else if (b == BYTE_DATESTAMP)
+                    {
+
+                        UInt32 longNumber = 0;
+                        if (pos >= inData.Length) break;
+                        longNumber = (UInt32)inData[pos];
+                        pos++;
+                        if (pos >= inData.Length) break;
+                        longNumber += (UInt32)(inData[pos] * 256);
+                        pos++;
+                        if (pos >= inData.Length) break;
+                        longNumber += (UInt32)(inData[pos] * 256 * 256);
+                        pos++;
+                        if (pos >= inData.Length) break;
+                        longNumber += (UInt32)(inData[pos] * 256 * 256 * 256);
+                        pos++;
+                        DateTime localDateTime = UnixTimeStampToDateTime(longNumber);
+                        if (startDate.ToBinary() == 0) startDate = localDateTime;
+                        if (timeStamp)
+                        {
+                            timeStampString = "[" + (localDateTime.Year).ToString() + "/" + localDateTime.Month.ToString() + "/" + localDateTime.Day.ToString() + " " + localDateTime.Hour.ToString() + ":" + localDateTime.Minute.ToString() + ":" + localDateTime.Second.ToString() + "]";
+                            outData.AddRange(Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage).GetBytes("\r\n" + timeStampString + CSVdelimiter + "<<" + CSVdelimiter));
+                            timeStampString = "";
                         }
                     }
                     else if (b == BYTE_TIMESTAMP)
@@ -703,9 +685,12 @@ namespace BC_Logger_control
                         if (pos >= inData.Length) break;
                         longNumber += (UInt32)(inData[pos] * 256 * 256 * 256);
                         pos++;
+                        if (startTime == 0) startTime = longNumber;
                         if (timeStamp)
                         {
-                            timeStampString = "[" + longNumber.ToString() + "]";
+                            DateTime localDateTime = new DateTime(1, 1, 1).AddMilliseconds(longNumber - startTime);
+                            localDateTime = localDateTime.Add(TimeSpan.FromTicks(startDate.Ticks));
+                            timeStampString = "[" + (localDateTime.Year).ToString() + "/" + localDateTime.Month.ToString() + "/" + localDateTime.Day.ToString() + " " + localDateTime.Hour.ToString() + ":" + localDateTime.Minute.ToString() + ":" + localDateTime.Second.ToString() + "." + localDateTime.Millisecond.ToString() + "]";
                         }
                     }
                     else if (b == SERIAL_RX)
@@ -933,6 +918,36 @@ namespace BC_Logger_control
         private void checkBox_portMon_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox_portMon.Checked) serialPort1_DataReceived(this, null);
+        }
+
+        private void checkBox_pcTime_CheckedChanged(object sender, EventArgs e)
+        {
+            // String(rtc.year() + 1970) + "/" + String(rtc.month()) + "/" + String(rtc.day()) + " " + String(rtc.hour()) + ":" + String(rtc.minute()) + ":" + String(rtc.second())
+            textBox_setTime.Text = DateTime.Now.Year.ToString("D4") + "/" + DateTime.Now.Month.ToString("D2") + "/" + DateTime.Now.Day.ToString("D2") + " " + DateTime.Now.Hour.ToString("D2") + ":" + DateTime.Now.Minute.ToString("D2") + ":" + DateTime.Now.Second.ToString("D2");
+            textBox_setTime.Enabled = !checkBox_pcTime.Checked;
+        }
+
+        private void button_getTime_Click(object sender, EventArgs e)
+        {
+            string tmp = textBox_getTimeCMD.Text + "\r\n";
+            serialPort1.WriteLine(tmp);
+            SetText("\r\n>> " + tmp);
+        }
+
+        private void button_setTime_Click(object sender, EventArgs e)
+        {
+            if (checkBox_pcTime.Checked) textBox_setTime.Text = DateTime.Now.Year.ToString("D4") + "/" + DateTime.Now.Month.ToString("D2") + "/" + DateTime.Now.Day.ToString("D2") + " " + DateTime.Now.Hour.ToString("D2") + ":" + DateTime.Now.Minute.ToString("D2") + ":" + DateTime.Now.Second.ToString("D2");
+            string tmp = textBox_setTimeCMD.Text + textBox_setTime.Text + "\r\n";
+            serialPort1.WriteLine(tmp);
+            SetText("\r\n>> " + tmp);
+        }
+
+        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
         }
     }
 }
