@@ -47,6 +47,7 @@ namespace BC_Logger_control
             this.button_getConfig = new System.Windows.Forms.Button();
             this.button_getFileList = new System.Windows.Forms.Button();
             this.tabPage_Set = new System.Windows.Forms.TabPage();
+            this.checkBox_pcTime = new System.Windows.Forms.CheckBox();
             this.comboBox_echo = new System.Windows.Forms.ComboBox();
             this.button_autoStart = new System.Windows.Forms.Button();
             this.checkBox_autoStart = new System.Windows.Forms.CheckBox();
@@ -56,10 +57,13 @@ namespace BC_Logger_control
             this.button_sendAll = new System.Windows.Forms.Button();
             this.checkBox_signals = new System.Windows.Forms.CheckBox();
             this.checkBox_timeStamp = new System.Windows.Forms.CheckBox();
+            this.textBox_setTime = new System.Windows.Forms.TextBox();
             this.textBox_portConfig = new System.Windows.Forms.TextBox();
             this.textBox_portSpeed = new System.Windows.Forms.TextBox();
             this.textBox_serialSpeed = new System.Windows.Forms.TextBox();
+            this.button_setTime = new System.Windows.Forms.Button();
             this.button_portConfig = new System.Windows.Forms.Button();
+            this.button_getTime = new System.Windows.Forms.Button();
             this.button_portSpeed = new System.Windows.Forms.Button();
             this.button_serialSpeed = new System.Windows.Forms.Button();
             this.tabPage_Commands = new System.Windows.Forms.TabPage();
@@ -74,8 +78,10 @@ namespace BC_Logger_control
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -89,8 +95,10 @@ namespace BC_Logger_control
             this.textBox_getFileListCMD = new System.Windows.Forms.TextBox();
             this.textBox_delFileCMD = new System.Windows.Forms.TextBox();
             this.textBox_getFileCMD = new System.Windows.Forms.TextBox();
+            this.textBox_setTimeCMD = new System.Windows.Forms.TextBox();
             this.textBox_stopCMD = new System.Windows.Forms.TextBox();
             this.textBox_readConfigCMD = new System.Windows.Forms.TextBox();
+            this.textBox_getTimeCMD = new System.Windows.Forms.TextBox();
             this.textBox_startCMD = new System.Windows.Forms.TextBox();
             this.textBox_saveConfigCMD = new System.Windows.Forms.TextBox();
             this.textBox_getConfigCMD = new System.Windows.Forms.TextBox();
@@ -121,14 +129,6 @@ namespace BC_Logger_control
             this.label17 = new System.Windows.Forms.Label();
             this.checkBox_dtr = new System.Windows.Forms.CheckBox();
             this.checkBox_rts = new System.Windows.Forms.CheckBox();
-            this.textBox_getTimeCMD = new System.Windows.Forms.TextBox();
-            this.textBox_setTimeCMD = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.button_getTime = new System.Windows.Forms.Button();
-            this.button_setTime = new System.Windows.Forms.Button();
-            this.textBox_setTime = new System.Windows.Forms.TextBox();
-            this.checkBox_pcTime = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPage_Get.SuspendLayout();
             this.tabPage_Set.SuspendLayout();
@@ -333,6 +333,18 @@ namespace BC_Logger_control
             this.tabPage_Set.Text = "Set settings";
             this.tabPage_Set.UseVisualStyleBackColor = true;
             // 
+            // checkBox_pcTime
+            // 
+            this.checkBox_pcTime.AutoSize = true;
+            this.checkBox_pcTime.Location = new System.Drawing.Point(314, 245);
+            this.checkBox_pcTime.Margin = new System.Windows.Forms.Padding(6);
+            this.checkBox_pcTime.Name = "checkBox_pcTime";
+            this.checkBox_pcTime.Size = new System.Drawing.Size(94, 28);
+            this.checkBox_pcTime.TabIndex = 10;
+            this.checkBox_pcTime.Text = "PC time";
+            this.checkBox_pcTime.UseVisualStyleBackColor = true;
+            this.checkBox_pcTime.CheckedChanged += new System.EventHandler(this.checkBox_pcTime_CheckedChanged);
+            // 
             // comboBox_echo
             // 
             this.comboBox_echo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -437,6 +449,16 @@ namespace BC_Logger_control
             this.checkBox_timeStamp.TabIndex = 2;
             this.checkBox_timeStamp.UseVisualStyleBackColor = true;
             // 
+            // textBox_setTime
+            // 
+            this.textBox_setTime.Location = new System.Drawing.Point(228, 285);
+            this.textBox_setTime.Margin = new System.Windows.Forms.Padding(6);
+            this.textBox_setTime.MaxLength = 19;
+            this.textBox_setTime.Name = "textBox_setTime";
+            this.textBox_setTime.Size = new System.Drawing.Size(180, 29);
+            this.textBox_setTime.TabIndex = 1;
+            this.textBox_setTime.Text = "2018/12/31 01:02:03";
+            // 
             // textBox_portConfig
             // 
             this.textBox_portConfig.Location = new System.Drawing.Point(228, 124);
@@ -467,6 +489,18 @@ namespace BC_Logger_control
             this.textBox_serialSpeed.TabIndex = 1;
             this.textBox_serialSpeed.Text = "250000";
             // 
+            // button_setTime
+            // 
+            this.button_setTime.Enabled = false;
+            this.button_setTime.Location = new System.Drawing.Point(12, 279);
+            this.button_setTime.Margin = new System.Windows.Forms.Padding(6);
+            this.button_setTime.Name = "button_setTime";
+            this.button_setTime.Size = new System.Drawing.Size(204, 42);
+            this.button_setTime.TabIndex = 0;
+            this.button_setTime.Text = "Set time";
+            this.button_setTime.UseVisualStyleBackColor = true;
+            this.button_setTime.Click += new System.EventHandler(this.button_setTime_Click);
+            // 
             // button_portConfig
             // 
             this.button_portConfig.Enabled = false;
@@ -478,6 +512,18 @@ namespace BC_Logger_control
             this.button_portConfig.Text = "Set port config";
             this.button_portConfig.UseVisualStyleBackColor = true;
             this.button_portConfig.Click += new System.EventHandler(this.button_portConfig_Click);
+            // 
+            // button_getTime
+            // 
+            this.button_getTime.Enabled = false;
+            this.button_getTime.Location = new System.Drawing.Point(12, 226);
+            this.button_getTime.Margin = new System.Windows.Forms.Padding(6);
+            this.button_getTime.Name = "button_getTime";
+            this.button_getTime.Size = new System.Drawing.Size(204, 42);
+            this.button_getTime.TabIndex = 0;
+            this.button_getTime.Text = "Get time";
+            this.button_getTime.UseVisualStyleBackColor = true;
+            this.button_getTime.Click += new System.EventHandler(this.button_getTime_Click);
             // 
             // button_portSpeed
             // 
@@ -660,6 +706,16 @@ namespace BC_Logger_control
             this.label3.TabIndex = 3;
             this.label3.Text = "Get data -> Get file";
             // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label21.Location = new System.Drawing.Point(112, 390);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(98, 13);
+            this.label21.TabIndex = 3;
+            this.label21.Text = "Settings -> Set time";
+            // 
             // label16
             // 
             this.label16.AutoSize = true;
@@ -679,6 +735,16 @@ namespace BC_Logger_control
             this.label14.Size = new System.Drawing.Size(160, 13);
             this.label14.TabIndex = 3;
             this.label14.Text = "Get data -> Read config from SD";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label19.Location = new System.Drawing.Point(112, 366);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(99, 13);
+            this.label19.TabIndex = 3;
+            this.label19.Text = "Settings -> Get time";
             // 
             // label15
             // 
@@ -810,6 +876,16 @@ namespace BC_Logger_control
             this.textBox_getFileCMD.TabIndex = 2;
             this.textBox_getFileCMD.Text = "download bin ";
             // 
+            // textBox_setTimeCMD
+            // 
+            this.textBox_setTimeCMD.Enabled = false;
+            this.textBox_setTimeCMD.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox_setTimeCMD.Location = new System.Drawing.Point(6, 387);
+            this.textBox_setTimeCMD.Name = "textBox_setTimeCMD";
+            this.textBox_setTimeCMD.Size = new System.Drawing.Size(100, 18);
+            this.textBox_setTimeCMD.TabIndex = 2;
+            this.textBox_setTimeCMD.Text = "time ";
+            // 
             // textBox_stopCMD
             // 
             this.textBox_stopCMD.Enabled = false;
@@ -829,6 +905,16 @@ namespace BC_Logger_control
             this.textBox_readConfigCMD.Size = new System.Drawing.Size(100, 18);
             this.textBox_readConfigCMD.TabIndex = 2;
             this.textBox_readConfigCMD.Text = "read config";
+            // 
+            // textBox_getTimeCMD
+            // 
+            this.textBox_getTimeCMD.Enabled = false;
+            this.textBox_getTimeCMD.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox_getTimeCMD.Location = new System.Drawing.Point(6, 363);
+            this.textBox_getTimeCMD.Name = "textBox_getTimeCMD";
+            this.textBox_getTimeCMD.Size = new System.Drawing.Size(100, 18);
+            this.textBox_getTimeCMD.TabIndex = 2;
+            this.textBox_getTimeCMD.Text = "showtime";
             // 
             // textBox_startCMD
             // 
@@ -1021,6 +1107,7 @@ namespace BC_Logger_control
             this.textBox_terminal.Font = new System.Drawing.Font("Courier New", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox_terminal.Location = new System.Drawing.Point(450, 34);
             this.textBox_terminal.Margin = new System.Windows.Forms.Padding(6);
+            this.textBox_terminal.MaxLength = 32767000;
             this.textBox_terminal.Multiline = true;
             this.textBox_terminal.Name = "textBox_terminal";
             this.textBox_terminal.ReadOnly = true;
@@ -1211,92 +1298,6 @@ namespace BC_Logger_control
             this.checkBox_rts.Text = "RTS";
             this.checkBox_rts.UseVisualStyleBackColor = true;
             this.checkBox_rts.CheckedChanged += new System.EventHandler(this.checkBox_rts_CheckedChanged);
-            // 
-            // textBox_getTimeCMD
-            // 
-            this.textBox_getTimeCMD.Enabled = false;
-            this.textBox_getTimeCMD.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox_getTimeCMD.Location = new System.Drawing.Point(6, 363);
-            this.textBox_getTimeCMD.Name = "textBox_getTimeCMD";
-            this.textBox_getTimeCMD.Size = new System.Drawing.Size(100, 18);
-            this.textBox_getTimeCMD.TabIndex = 2;
-            this.textBox_getTimeCMD.Text = "showtime";
-            // 
-            // textBox_setTimeCMD
-            // 
-            this.textBox_setTimeCMD.Enabled = false;
-            this.textBox_setTimeCMD.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox_setTimeCMD.Location = new System.Drawing.Point(6, 387);
-            this.textBox_setTimeCMD.Name = "textBox_setTimeCMD";
-            this.textBox_setTimeCMD.Size = new System.Drawing.Size(100, 18);
-            this.textBox_setTimeCMD.TabIndex = 2;
-            this.textBox_setTimeCMD.Text = "time ";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label19.Location = new System.Drawing.Point(112, 366);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(99, 13);
-            this.label19.TabIndex = 3;
-            this.label19.Text = "Settings -> Get time";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label21.Location = new System.Drawing.Point(112, 390);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(98, 13);
-            this.label21.TabIndex = 3;
-            this.label21.Text = "Settings -> Set time";
-            // 
-            // button_getTime
-            // 
-            this.button_getTime.Enabled = false;
-            this.button_getTime.Location = new System.Drawing.Point(12, 226);
-            this.button_getTime.Margin = new System.Windows.Forms.Padding(6);
-            this.button_getTime.Name = "button_getTime";
-            this.button_getTime.Size = new System.Drawing.Size(204, 42);
-            this.button_getTime.TabIndex = 0;
-            this.button_getTime.Text = "Get time";
-            this.button_getTime.UseVisualStyleBackColor = true;
-            this.button_getTime.Click += new System.EventHandler(this.button_getTime_Click);
-            // 
-            // button_setTime
-            // 
-            this.button_setTime.Enabled = false;
-            this.button_setTime.Location = new System.Drawing.Point(12, 279);
-            this.button_setTime.Margin = new System.Windows.Forms.Padding(6);
-            this.button_setTime.Name = "button_setTime";
-            this.button_setTime.Size = new System.Drawing.Size(204, 42);
-            this.button_setTime.TabIndex = 0;
-            this.button_setTime.Text = "Set time";
-            this.button_setTime.UseVisualStyleBackColor = true;
-            this.button_setTime.Click += new System.EventHandler(this.button_setTime_Click);
-            // 
-            // textBox_setTime
-            // 
-            this.textBox_setTime.Location = new System.Drawing.Point(228, 285);
-            this.textBox_setTime.Margin = new System.Windows.Forms.Padding(6);
-            this.textBox_setTime.MaxLength = 19;
-            this.textBox_setTime.Name = "textBox_setTime";
-            this.textBox_setTime.Size = new System.Drawing.Size(180, 29);
-            this.textBox_setTime.TabIndex = 1;
-            this.textBox_setTime.Text = "2018/12/31 01:02:03";
-            // 
-            // checkBox_pcTime
-            // 
-            this.checkBox_pcTime.AutoSize = true;
-            this.checkBox_pcTime.Location = new System.Drawing.Point(314, 326);
-            this.checkBox_pcTime.Margin = new System.Windows.Forms.Padding(6);
-            this.checkBox_pcTime.Name = "checkBox_pcTime";
-            this.checkBox_pcTime.Size = new System.Drawing.Size(94, 28);
-            this.checkBox_pcTime.TabIndex = 10;
-            this.checkBox_pcTime.Text = "PC time";
-            this.checkBox_pcTime.UseVisualStyleBackColor = true;
-            this.checkBox_pcTime.CheckedChanged += new System.EventHandler(this.checkBox_pcTime_CheckedChanged);
             // 
             // Form1
             // 
