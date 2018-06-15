@@ -653,6 +653,7 @@ namespace BC_Logger_control
             byte SERIAL_TX = 103;
             //byte SERIAL_SIGNAL = 104;
             byte BUFFER_OVERFLOW = 105;
+            byte TIME_MARK=106;
 
             byte CD_bit = 0;
             byte DTR_bit = 1;
