@@ -34,5 +34,29 @@ namespace RS232Logger_control.Properties {
                 this["CodePage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int LogLineBuffer {
+            get {
+                return ((int)(this["LogLineBuffer"]));
+            }
+            set {
+                this["LogLineBuffer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(";")]
+        public string CSVdelimiter {
+            get {
+                return ((string)(this["CSVdelimiter"]));
+            }
+            set {
+                this["CSVdelimiter"] = value;
+            }
+        }
     }
 }

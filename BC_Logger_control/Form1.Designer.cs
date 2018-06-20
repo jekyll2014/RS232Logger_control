@@ -103,16 +103,18 @@ namespace BC_Logger_control
             this.textBox_saveConfigCMD = new System.Windows.Forms.TextBox();
             this.textBox_getConfigCMD = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox_showRxSetting = new System.Windows.Forms.CheckBox();
+            this.checkBox_showTxSetting = new System.Windows.Forms.CheckBox();
+            this.checkBox_showTimestampsSetting = new System.Windows.Forms.CheckBox();
+            this.checkBox_showSignalsSetting = new System.Windows.Forms.CheckBox();
+            this.checkBox_toBinSetting = new System.Windows.Forms.CheckBox();
+            this.checkBox_decodeFilesSetting = new System.Windows.Forms.CheckBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.textBox_csvDelimiter = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox_logLineSetting = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox_codePageSetting = new System.Windows.Forms.TextBox();
             this.textBox_terminal = new System.Windows.Forms.TextBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -336,6 +338,8 @@ namespace BC_Logger_control
             // checkBox_pcTime
             // 
             this.checkBox_pcTime.AutoSize = true;
+            this.checkBox_pcTime.Checked = true;
+            this.checkBox_pcTime.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_pcTime.Location = new System.Drawing.Point(314, 245);
             this.checkBox_pcTime.Margin = new System.Windows.Forms.Padding(6);
             this.checkBox_pcTime.Name = "checkBox_pcTime";
@@ -948,16 +952,18 @@ namespace BC_Logger_control
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.checkBox6);
-            this.tabPage1.Controls.Add(this.checkBox5);
-            this.tabPage1.Controls.Add(this.checkBox4);
-            this.tabPage1.Controls.Add(this.checkBox3);
-            this.tabPage1.Controls.Add(this.checkBox2);
-            this.tabPage1.Controls.Add(this.checkBox1);
+            this.tabPage1.Controls.Add(this.checkBox_showRxSetting);
+            this.tabPage1.Controls.Add(this.checkBox_showTxSetting);
+            this.tabPage1.Controls.Add(this.checkBox_showTimestampsSetting);
+            this.tabPage1.Controls.Add(this.checkBox_showSignalsSetting);
+            this.tabPage1.Controls.Add(this.checkBox_toBinSetting);
+            this.tabPage1.Controls.Add(this.checkBox_decodeFilesSetting);
+            this.tabPage1.Controls.Add(this.label22);
+            this.tabPage1.Controls.Add(this.textBox_csvDelimiter);
             this.tabPage1.Controls.Add(this.label20);
-            this.tabPage1.Controls.Add(this.textBox3);
+            this.tabPage1.Controls.Add(this.textBox_logLineSetting);
             this.tabPage1.Controls.Add(this.label18);
-            this.tabPage1.Controls.Add(this.textBox1);
+            this.tabPage1.Controls.Add(this.textBox_codePageSetting);
             this.tabPage1.Location = new System.Drawing.Point(4, 33);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(432, 328);
@@ -965,100 +971,114 @@ namespace BC_Logger_control
             this.tabPage1.Text = "Setup";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // checkBox6
+            // checkBox_showRxSetting
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox6.Checked = true;
-            this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox6.Enabled = false;
-            this.checkBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox6.Location = new System.Drawing.Point(16, 172);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(70, 17);
-            this.checkBox6.TabIndex = 7;
-            this.checkBox6.Text = "Show RX";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            this.checkBox_showRxSetting.AutoSize = true;
+            this.checkBox_showRxSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox_showRxSetting.Checked = true;
+            this.checkBox_showRxSetting.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_showRxSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBox_showRxSetting.Location = new System.Drawing.Point(14, 185);
+            this.checkBox_showRxSetting.Name = "checkBox_showRxSetting";
+            this.checkBox_showRxSetting.Size = new System.Drawing.Size(70, 17);
+            this.checkBox_showRxSetting.TabIndex = 7;
+            this.checkBox_showRxSetting.Text = "Show RX";
+            this.checkBox_showRxSetting.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // checkBox_showTxSetting
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox5.Checked = true;
-            this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox5.Enabled = false;
-            this.checkBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox5.Location = new System.Drawing.Point(16, 149);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(68, 17);
-            this.checkBox5.TabIndex = 7;
-            this.checkBox5.Text = "Show TX";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.checkBox_showTxSetting.AutoSize = true;
+            this.checkBox_showTxSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox_showTxSetting.Checked = true;
+            this.checkBox_showTxSetting.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_showTxSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBox_showTxSetting.Location = new System.Drawing.Point(14, 162);
+            this.checkBox_showTxSetting.Name = "checkBox_showTxSetting";
+            this.checkBox_showTxSetting.Size = new System.Drawing.Size(68, 17);
+            this.checkBox_showTxSetting.TabIndex = 7;
+            this.checkBox_showTxSetting.Text = "Show TX";
+            this.checkBox_showTxSetting.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // checkBox_showTimestampsSetting
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox4.Checked = true;
-            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox4.Enabled = false;
-            this.checkBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox4.Location = new System.Drawing.Point(16, 126);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(108, 17);
-            this.checkBox4.TabIndex = 7;
-            this.checkBox4.Text = "Show timestamps";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox_showTimestampsSetting.AutoSize = true;
+            this.checkBox_showTimestampsSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox_showTimestampsSetting.Checked = true;
+            this.checkBox_showTimestampsSetting.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_showTimestampsSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBox_showTimestampsSetting.Location = new System.Drawing.Point(14, 139);
+            this.checkBox_showTimestampsSetting.Name = "checkBox_showTimestampsSetting";
+            this.checkBox_showTimestampsSetting.Size = new System.Drawing.Size(108, 17);
+            this.checkBox_showTimestampsSetting.TabIndex = 7;
+            this.checkBox_showTimestampsSetting.Text = "Show timestamps";
+            this.checkBox_showTimestampsSetting.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // checkBox_showSignalsSetting
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Enabled = false;
-            this.checkBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox3.Location = new System.Drawing.Point(16, 103);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(88, 17);
-            this.checkBox3.TabIndex = 7;
-            this.checkBox3.Text = "Show signals";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox_showSignalsSetting.AutoSize = true;
+            this.checkBox_showSignalsSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox_showSignalsSetting.Checked = true;
+            this.checkBox_showSignalsSetting.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_showSignalsSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBox_showSignalsSetting.Location = new System.Drawing.Point(14, 116);
+            this.checkBox_showSignalsSetting.Name = "checkBox_showSignalsSetting";
+            this.checkBox_showSignalsSetting.Size = new System.Drawing.Size(88, 17);
+            this.checkBox_showSignalsSetting.TabIndex = 7;
+            this.checkBox_showSignalsSetting.Text = "Show signals";
+            this.checkBox_showSignalsSetting.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // checkBox_toBinSetting
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Enabled = false;
-            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox2.Location = new System.Drawing.Point(16, 80);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(57, 17);
-            this.checkBox2.TabIndex = 7;
-            this.checkBox2.Text = "To BIN";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox_toBinSetting.AutoSize = true;
+            this.checkBox_toBinSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox_toBinSetting.Checked = true;
+            this.checkBox_toBinSetting.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_toBinSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBox_toBinSetting.Location = new System.Drawing.Point(14, 93);
+            this.checkBox_toBinSetting.Name = "checkBox_toBinSetting";
+            this.checkBox_toBinSetting.Size = new System.Drawing.Size(57, 17);
+            this.checkBox_toBinSetting.TabIndex = 7;
+            this.checkBox_toBinSetting.Text = "To BIN";
+            this.checkBox_toBinSetting.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // checkBox_decodeFilesSetting
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Enabled = false;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox1.Location = new System.Drawing.Point(3, 57);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(145, 17);
-            this.checkBox1.TabIndex = 7;
-            this.checkBox1.Text = "Decode downloaded files";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox_decodeFilesSetting.AutoSize = true;
+            this.checkBox_decodeFilesSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox_decodeFilesSetting.Checked = true;
+            this.checkBox_decodeFilesSetting.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_decodeFilesSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBox_decodeFilesSetting.Location = new System.Drawing.Point(3, 57);
+            this.checkBox_decodeFilesSetting.Name = "checkBox_decodeFilesSetting";
+            this.checkBox_decodeFilesSetting.Size = new System.Drawing.Size(145, 17);
+            this.checkBox_decodeFilesSetting.TabIndex = 7;
+            this.checkBox_decodeFilesSetting.Text = "Decode downloaded files";
+            this.checkBox_decodeFilesSetting.UseVisualStyleBackColor = true;
+            this.checkBox_decodeFilesSetting.CheckedChanged += new System.EventHandler(this.checkBox_decodeFilesSetting_CheckedChanged);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label22.Location = new System.Drawing.Point(14, 77);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(69, 13);
+            this.label22.TabIndex = 6;
+            this.label22.Text = "CSV delimiter";
+            // 
+            // textBox_csvDelimiter
+            // 
+            this.textBox_csvDelimiter.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox_csvDelimiter.Location = new System.Drawing.Point(89, 74);
+            this.textBox_csvDelimiter.MaxLength = 1;
+            this.textBox_csvDelimiter.Name = "textBox_csvDelimiter";
+            this.textBox_csvDelimiter.Size = new System.Drawing.Size(41, 18);
+            this.textBox_csvDelimiter.TabIndex = 5;
+            this.textBox_csvDelimiter.Text = ";";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Enabled = false;
             this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label20.Location = new System.Drawing.Point(6, 36);
             this.label20.Name = "label20";
@@ -1066,21 +1086,20 @@ namespace BC_Logger_control
             this.label20.TabIndex = 6;
             this.label20.Text = "Log line buffer";
             // 
-            // textBox3
+            // textBox_logLineSetting
             // 
-            this.textBox3.Enabled = false;
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox3.Location = new System.Drawing.Point(86, 33);
-            this.textBox3.MaxLength = 6;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(41, 18);
-            this.textBox3.TabIndex = 5;
-            this.textBox3.Text = "866";
+            this.textBox_logLineSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox_logLineSetting.Location = new System.Drawing.Point(86, 33);
+            this.textBox_logLineSetting.MaxLength = 5;
+            this.textBox_logLineSetting.Name = "textBox_logLineSetting";
+            this.textBox_logLineSetting.Size = new System.Drawing.Size(41, 18);
+            this.textBox_logLineSetting.TabIndex = 5;
+            this.textBox_logLineSetting.Text = "1000";
+            this.textBox_logLineSetting.TextChanged += new System.EventHandler(this.textBox_logLineSetting_TextChanged);
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Enabled = false;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label18.Location = new System.Drawing.Point(6, 10);
             this.label18.Name = "label18";
@@ -1088,16 +1107,16 @@ namespace BC_Logger_control
             this.label18.TabIndex = 6;
             this.label18.Text = "Code page";
             // 
-            // textBox1
+            // textBox_codePageSetting
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(71, 7);
-            this.textBox1.MaxLength = 6;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(41, 18);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.Text = "866";
+            this.textBox_codePageSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox_codePageSetting.Location = new System.Drawing.Point(71, 7);
+            this.textBox_codePageSetting.MaxLength = 6;
+            this.textBox_codePageSetting.Name = "textBox_codePageSetting";
+            this.textBox_codePageSetting.Size = new System.Drawing.Size(41, 18);
+            this.textBox_codePageSetting.TabIndex = 5;
+            this.textBox_codePageSetting.Text = "866";
+            this.textBox_codePageSetting.TextChanged += new System.EventHandler(this.textBox_codePageSetting_TextChanged);
             // 
             // textBox_terminal
             // 
@@ -1419,16 +1438,16 @@ namespace BC_Logger_control
         private System.Windows.Forms.ComboBox comboBox_getFileList;
         private System.Windows.Forms.ComboBox comboBox_delFileList;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox_showTxSetting;
+        private System.Windows.Forms.CheckBox checkBox_showTimestampsSetting;
+        private System.Windows.Forms.CheckBox checkBox_showSignalsSetting;
+        private System.Windows.Forms.CheckBox checkBox_toBinSetting;
+        private System.Windows.Forms.CheckBox checkBox_decodeFilesSetting;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.TextBox textBox_codePageSetting;
+        private System.Windows.Forms.CheckBox checkBox_showRxSetting;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox_logLineSetting;
         private System.Windows.Forms.CheckBox checkBox_pcTime;
         private System.Windows.Forms.TextBox textBox_setTime;
         private System.Windows.Forms.Button button_setTime;
@@ -1437,6 +1456,8 @@ namespace BC_Logger_control
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox textBox_setTimeCMD;
         private System.Windows.Forms.TextBox textBox_getTimeCMD;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox textBox_csvDelimiter;
     }
 }
 

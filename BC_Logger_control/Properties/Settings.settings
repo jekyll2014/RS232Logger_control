@@ -5,5 +5,11 @@
     <Setting Name="CodePage" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">866</Value>
     </Setting>
+    <Setting Name="LogLineBuffer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="CSVdelimiter" Type="System.String" Scope="User">
+      <Value Profile="(Default)">;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

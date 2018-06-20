@@ -56,6 +56,8 @@ namespace BC_Logger_control
 
         public static System.Timers.Timer aTimer;
         List<string> portDesc = new List<string>();
+        int LogLinesLimit = 100;
+        int CodePage = RS232Logger_control.Properties.Settings.Default.CodePage;
 
         delegate void SetTextCallback1(string text);
         private void SetText(string text)
@@ -63,14 +65,36 @@ namespace BC_Logger_control
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
-            if (this.textBox_terminal.InvokeRequired)
+            //if (this.textBox_terminal1.InvokeRequired)
+            if (textBox_terminal.InvokeRequired)
             {
                 SetTextCallback1 d = new SetTextCallback1(SetText);
-                this.BeginInvoke(d, new object[] { text });
+                BeginInvoke(d, new object[] { text });
             }
             else
             {
-                this.textBox_terminal.Text += text;
+                int pos = textBox_terminal.SelectionStart;
+                textBox_terminal.AppendText(text);
+                if (textBox_terminal.Lines.Length > LogLinesLimit)
+                {
+                    StringBuilder tmp = new StringBuilder();
+                    for (int i = textBox_terminal.Lines.Length - LogLinesLimit; i < textBox_terminal.Lines.Length; i++)
+                    {
+                        tmp.Append(textBox_terminal.Lines[i]);
+                        tmp.Append("\r\n");
+                    }
+                    textBox_terminal.Text = tmp.ToString();
+                }
+                if (checkBox_autoScroll.Checked)
+                {
+                    textBox_terminal.SelectionStart = textBox_terminal.Text.Length;
+                    textBox_terminal.ScrollToCaret();
+                }
+                else
+                {
+                    textBox_terminal.SelectionStart = pos;
+                    textBox_terminal.ScrollToCaret();
+                }
             }
         }
 
@@ -148,6 +172,8 @@ namespace BC_Logger_control
             serialPort1.Encoding = Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage);
             button_refresh_Click(this, EventArgs.Empty);
             comboBox_echo.SelectedIndex = 0;
+            int.TryParse(textBox_logLineSetting.Text, out LogLinesLimit);
+            textBox_codePageSetting.Text = RS232Logger_control.Properties.Settings.Default.CodePage.ToString();
         }
 
         private void button_refresh_Click(object sender, EventArgs e)
@@ -574,7 +600,7 @@ namespace BC_Logger_control
                 }
                 try
                 {
-                    byte[] hexLog = decodeLog(file.ToArray(), RS232Logger_control.Properties.Settings.Default.CodePage);
+                    byte[] hexLog = decodeLog(file.ToArray(), CodePage, textBox_csvDelimiter.Text, checkBox_toBinSetting.Checked, checkBox_showSignalsSetting.Checked, checkBox_showTimestampsSetting.Checked, checkBox_showTxSetting.Checked, checkBox_showRxSetting.Checked);
                     File.WriteAllBytes(name + ".txt", hexLog);
                 }
                 catch (Exception ex)
@@ -940,6 +966,26 @@ namespace BC_Logger_control
             DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local);
             dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
             return dtDateTime;
+        }
+
+        private void checkBox_decodeFilesSetting_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBox_toBinSetting.Enabled = checkBox_decodeFilesSetting.Checked;
+            checkBox_showSignalsSetting.Enabled = checkBox_decodeFilesSetting.Checked;
+            checkBox_showTimestampsSetting.Enabled = checkBox_decodeFilesSetting.Checked;
+            checkBox_showTxSetting.Enabled = checkBox_decodeFilesSetting.Checked;
+            checkBox_showRxSetting.Enabled = checkBox_decodeFilesSetting.Checked;
+            textBox_csvDelimiter.Enabled = checkBox_decodeFilesSetting.Checked;
+        }
+
+        private void textBox_codePageSetting_TextChanged(object sender, EventArgs e)
+        {
+            int.TryParse(textBox_codePageSetting.Text, out CodePage);
+        }
+
+        private void textBox_logLineSetting_TextChanged(object sender, EventArgs e)
+        {
+            int.TryParse(textBox_logLineSetting.Text, out LogLinesLimit);
         }
     }
 }
