@@ -56,7 +56,7 @@ namespace BC_Logger_control
 
         public static System.Timers.Timer aTimer;
         List<string> portDesc = new List<string>();
-        int LogLinesLimit = 100;
+        int LogBufferLimit = 100;
         int CodePage = RS232Logger_control.Properties.Settings.Default.CodePage;
 
         delegate void SetTextCallback1(string text);
@@ -73,18 +73,14 @@ namespace BC_Logger_control
             }
             else
             {
+                StringBuilder terminal = new StringBuilder();
+                terminal.Append(textBox_terminal.Text);
+                terminal.Append(text);
                 int pos = textBox_terminal.SelectionStart;
-                textBox_terminal.AppendText(text);
-                if (textBox_terminal.Lines.Length > LogLinesLimit)
-                {
-                    StringBuilder tmp = new StringBuilder();
-                    for (int i = textBox_terminal.Lines.Length - LogLinesLimit; i < textBox_terminal.Lines.Length; i++)
-                    {
-                        tmp.Append(textBox_terminal.Lines[i]);
-                        tmp.Append("\r\n");
-                    }
-                    textBox_terminal.Text = tmp.ToString();
-                }
+                int l = terminal.Length - LogBufferLimit;
+                if (l < 0) l = 0;
+                textBox_terminal.Text = terminal.ToString().Substring(l);
+
                 if (checkBox_autoScroll.Checked)
                 {
                     textBox_terminal.SelectionStart = textBox_terminal.Text.Length;
@@ -92,6 +88,8 @@ namespace BC_Logger_control
                 }
                 else
                 {
+                    pos = pos - text.Length;
+                    if (pos < 0) pos = 0;
                     textBox_terminal.SelectionStart = pos;
                     textBox_terminal.ScrollToCaret();
                 }
@@ -169,11 +167,15 @@ namespace BC_Logger_control
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            serialPort1.Encoding = Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage);
+            textBox_codePageSetting.Text = RS232Logger_control.Properties.Settings.Default.CodePage.ToString();
+            int.TryParse(textBox_codePageSetting.Text, out CodePage);
+            serialPort1.Encoding = Encoding.GetEncoding(CodePage);
+
+            textBox_logBufferSetting.Text = RS232Logger_control.Properties.Settings.Default.LogBufferSize.ToString();
+            int.TryParse(textBox_logBufferSetting.Text, out LogBufferLimit);
+
             button_refresh_Click(this, EventArgs.Empty);
             comboBox_echo.SelectedIndex = 0;
-            int.TryParse(textBox_logLineSetting.Text, out LogLinesLimit);
-            textBox_codePageSetting.Text = RS232Logger_control.Properties.Settings.Default.CodePage.ToString();
         }
 
         private void button_refresh_Click(object sender, EventArgs e)
@@ -465,8 +467,9 @@ namespace BC_Logger_control
                 {
                     label_sdCard.BackColor = System.Drawing.Color.LimeGreen;
                     label_sdCard.Text = "SD-card present: yes";
-                    SetText("yes");
+
                 }
+                SetText(tmp + "\r\n");
             }
             catch (TimeoutException ex)
             {
@@ -981,11 +984,12 @@ namespace BC_Logger_control
         private void textBox_codePageSetting_TextChanged(object sender, EventArgs e)
         {
             int.TryParse(textBox_codePageSetting.Text, out CodePage);
+            serialPort1.Encoding = Encoding.GetEncoding(CodePage);
         }
 
         private void textBox_logLineSetting_TextChanged(object sender, EventArgs e)
         {
-            int.TryParse(textBox_logLineSetting.Text, out LogLinesLimit);
+            int.TryParse(textBox_logBufferSetting.Text, out LogBufferLimit);
         }
     }
 }
