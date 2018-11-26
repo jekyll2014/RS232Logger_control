@@ -44,6 +44,7 @@ using System.Threading;
 using System.Collections;
 using Microsoft.Win32;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BC_Logger_control
 {
@@ -320,18 +321,26 @@ namespace BC_Logger_control
             button_sendAll.Enabled = false;
         }
 
-        private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        private async void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             if (checkBox_portMon.Checked)
             {
                 List<byte> rx = new List<byte>();
+                var stream = serialPort1.BaseStream;
                 while (serialPort1.BytesToRead > 0)
                 {
-                    rx.Add((byte)serialPort1.ReadByte());
+                    byte[] buff = new byte[serialPort1.BytesToRead];
+                    var readedBytesNumber = await stream.ReadAsync(buff, 0, buff.Length).ConfigureAwait(false);
+                    rx.AddRange(buff);
+                    //rx.Add((byte)serialPort1.ReadByte());
                 }
-                SetText(Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage).GetString(rx.ToArray()));
+                await Task.Run(() =>
+                {
+                    SetText(Encoding.GetEncoding(RS232Logger_control.Properties.Settings.Default.CodePage).GetString(rx.ToArray()));
+                });
             }
         }
+
 
         private void serialPort1_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
         {
